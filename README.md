@@ -8,7 +8,7 @@ Bringing back the glorious lunchbot!
 
 ## How to
 
-Just add [the bot](https://join.skype.com/bot/1e7994e1-ae54-4ed0-be74-05e16bc835d6) as contact in Skype.
+Just add [the bot](https://join.skype.com/bot/1e7994e1-ae54-4ed0-be74-05e16bc835d6) as contact in Skype (it is not published yet, so use the link here).
 
 So far it understands the following commands:
 
