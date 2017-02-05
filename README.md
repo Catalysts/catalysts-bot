@@ -24,3 +24,15 @@ So far it understands the following commands:
 ## Contributing
 
 Feel free to submit pull requests with more lunch commands! 
+
+## Testing
+
+First, run the bot 
+
+```
+node app.js
+```
+
+then, use the [Microsoft Bot Framework Emulator](https://docs.botframework.com/en-us/tools/bot-framework-emulator/) and connect to it.
+
+
