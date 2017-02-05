@@ -77,7 +77,7 @@ intents.matches(/^all/i, [
 
 intents.onDefault([
     function (session, args, next) {
-        session.send("So far I only know about **RK**, **GKK** and **Eiserne Hand**.\n\nTeach me more here: https://github.com/fchtngr/catalysts-lunch-bot.git");
+        session.send("Hey, I'm a pretty dumb bot. So far I only understand **RK**, **GKK** and **Eiserne Hand**.\n\nTeach me more here: https://github.com/fchtngr/catalysts-lunch-bot.git");
     }
 ]);
 
