@@ -77,7 +77,7 @@ intents.matches(/^all/i, [
 
 intents.onDefault([
     function (session, args, next) {
-        session.send("I know about: rk, eiserne hand, gkk.\n\nTeach me more here: <github>");
+        session.send("So far I only know about **RK**, **GKK** and **Eiserne Hand**.\n\nTeach me more here: https://github.com/fchtngr/catalysts-lunch-bot.git");
     }
 ]);
 
@@ -111,14 +111,15 @@ function menu_eisernehand(callback) {
     	var result = "**Eiserne Hand**\n\n";
     	var day = new Date().getDay();
     	if (day < 1 || day > 5) {
-    		result += "No menu today."
+    		result += "No menu today.";
+    		callback(result);
     		return;
     	} 
 
         if (!error) {
             var $ = cheerio.load(html);
-            var result = $(`#content > div.row > div > div.weeklymenu > div:nth-child(${day})`).text().replace(/\n\s*/g, '\n').trim();
-            result += result;
+            var r = $(`#content > div.row > div > div.weeklymenu > div:nth-child(${day})`).text().replace(/\n\s*/g, '\n').trim();
+            result += r;
         }
 
         callback(result)
@@ -131,14 +132,13 @@ function menu_gkk(callback) {
 	textract.fromUrl(url, function(error, text) {
 		var result = "**GKK**\n\n"
 		if (error) {
-			console.log(error);
 			result += "Couldnt read todays menu, sorry!"
-			return;
 		} else {
 			var day = new Date().getDay();
+			
 			if (day < 1 || day > 5) {
-				console.log("no menu today");
-				callback("no menu today");
+				result += "No menu today."
+				callback(result);
 				return;
 			} 
 			
