@@ -4,7 +4,7 @@
 
 Bringing back the glorious lunchbot!
 
-:rice: :green_apple: :beers: :fork_and_knife: :poultry:
+:rice: :green_apple: :beers: :fork_and_knife: :poultry_leg:
 
 ## How to
 
