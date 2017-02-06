@@ -132,7 +132,7 @@ function menu_gkk(callback) {
 	textract.fromUrl(url, function(error, text) {
 		var result = "**GKK**\n\n"
 		if (error) {
-			result += "Couldnt read todays menu, sorry!"
+			result += "Couldnt read todays menu, sorry! (" + error + ")"
 		} else {
 			var day = new Date().getDay();
 			
