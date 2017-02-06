@@ -32,7 +32,7 @@ var intents = new builder.IntentDialog();
 
 bot.dialog('/', intents);
 
-intents.matches(/rk/i, [
+intents.matches(/.*rk .*/i, [
     function(session) {
         menu_rk(function(result) {
             session.send(result);
@@ -40,7 +40,7 @@ intents.matches(/rk/i, [
     }
 ]);
 
-intents.matches(/gkk/i, [
+intents.matches(/.*gkk .*/i, [
     function(session) {
         menu_gkk(function(result) {
             session.send(result);
@@ -48,7 +48,7 @@ intents.matches(/gkk/i, [
     }
 ]);
 
-intents.matches(/eiserne hand/i, [
+intents.matches(/.*eiserne hand .*/i, [
     function(session) {
         menu_eisernehand(function(result) {
             session.send(result);
@@ -56,7 +56,7 @@ intents.matches(/eiserne hand/i, [
     }
 ]);
 
-intents.matches(/all/i, [
+intents.matches(/.*all .*/i, [
     function(session) {
         //TODO maybe reuse other dialogs 
 
