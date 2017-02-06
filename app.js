@@ -174,7 +174,7 @@ function menu_gkk(callback) {
              */
         var index = day*2;
 
-        var menu = results[index].trim().replace(/Classic (I+)/g, "\n\nClassic $1\n").replace(/^, /g, "");
+        var menu = results[index].trim().replace(/Classic (I+)/g, "\n\nClassic $1\n\n").replace(/^, /g, "").replace("%2C", "");
 
         //console.log(menu);
         callback("**GKK**\n\n" + menu);
