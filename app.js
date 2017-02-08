@@ -56,6 +56,14 @@ intents.matches(/.*eiserne hand.*/i, [
     }
 ]);
 
+intents.matches(/.*lackinger.*/i, [
+    function(session) {
+        menu_lack(function(result) {
+            session.send(result);
+        });
+    }
+]);
+
 intents.matches(/.*all.*/i, [
     function(session) {
         //TODO maybe reuse other dialogs 
@@ -69,6 +77,10 @@ intents.matches(/.*all.*/i, [
         });
 
         menu_rk(function(result) {
+            session.send(result);
+        });
+
+        menu_lack(function(result) {
             session.send(result);
         });
     }
@@ -184,11 +196,20 @@ function menu_gkk(callback) {
 }
 
 function menu_lack(callback) {
-    var url = 'http://www.fleischerei-lackinger.at/lackinger/speiseplan/aktuellerspeiseplan';
+    var url = 'https://www.mittag.at/r/lackinger-am-sudbahnhofmarkt';
 
+	console.log("lackinger")
     request(url, function(error, response, html) {
+		var result = "**Lackinger (Südbahnhofmarkt)**\n\n";
         if (!error) {
-            //TODO
-        }
+			var $ = cheerio.load(html);
+			console.log($);
+			var r = $(`#current-menu > div`).text().replace("<br>", "\n")
+			console.log(r);
+			result += r;
+			callback(result)
+        } else {
+			callback("Could not read todays menu, sorry :(");
+		}
     })
 }
