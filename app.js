@@ -113,7 +113,7 @@ intents.matches(/.*all.*/i, [
 
 intents.onDefault([
     function(session, args, next) {
-        session.send("Hey, I'm a pretty dumb bot (angel). So far I only understand **RK**, **GKK** and **Eiserne Hand**.\n\nTeach me more here: https://github.com/fchtngr/catalysts-lunch-bot; You said: " + session.message.text);
+        session.send("Hey, I'm a pretty dumb bot (angel). So far I only understand **RK**, **GKK** and **Eiserne Hand**, **Hartl**, **Kräuterspiele** and **Lackinger**.\n\nTeach me more here: https://github.com/fchtngr/catalysts-lunch-bot; You said: " + session.message.text);
     }
 ]);
 
