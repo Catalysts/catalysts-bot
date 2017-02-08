@@ -64,6 +64,15 @@ intents.matches(/.*lackinger.*/i, [
     }
 ]);
 
+intents.matches(/.*kräuter|kräuterspiele.*/i, [
+    function(session) {
+        menu_kraut(function(result) {
+            session.send(result);
+        });
+    }
+]);
+
+
 intents.matches(/.*all.*/i, [
     function(session) {
         //TODO maybe reuse other dialogs 
@@ -81,6 +90,10 @@ intents.matches(/.*all.*/i, [
         });
 
         menu_lack(function(result) {
+            session.send(result);
+        });
+
+        menu_kraut(function(result) {
             session.send(result);
         });
     }
@@ -198,18 +211,31 @@ function menu_gkk(callback) {
 function menu_lack(callback) {
     var url = 'https://www.mittag.at/r/lackinger-am-sudbahnhofmarkt';
 
-	console.log("lackinger")
     request(url, function(error, response, html) {
 		var result = "**Lackinger (Südbahnhofmarkt)**\n\n";
         if (!error) {
 			var $ = cheerio.load(html);
-			console.log($);
 			var r = $(`#current-menu > div`).text().replace("<br>", "\n")
-			console.log(r);
 			result += r;
 			callback(result)
         } else {
 			callback("Could not read todays menu, sorry :(");
 		}
-    })
+    });
+}
+
+function menu_kraut(callback) {
+    var url = 'https://www.mittag.at/r/krauterspiele';
+
+    request(url, function(error, response, html) {
+		var result = "**Kräuterspiele**\n\n";
+        if (!error) {
+			var $ = cheerio.load(html);
+			var r = $(`#current-menu > div`).text().replace("<br>", "\n")
+			result += r;
+			callback(result)
+        } else {
+			callback("Could not read todays menu, sorry :(");
+		}
+    });
 }
