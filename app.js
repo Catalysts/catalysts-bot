@@ -64,6 +64,14 @@ intents.matches(/.*lackinger.*/i, [
     }
 ]);
 
+intents.matches(/.*hartl.*/i, [
+    function(session) {
+        menu_hartl(function(result) {
+            session.send(result);
+        });
+    }
+]);
+
 intents.matches(/.*kräuter|kräuterspiele.*/i, [
     function(session) {
         menu_kraut(function(result) {
@@ -94,6 +102,10 @@ intents.matches(/.*all.*/i, [
         });
 
         menu_kraut(function(result) {
+            session.send(result);
+        });
+
+        menu_hartl(function(result) {
             session.send(result);
         });
     }
@@ -239,3 +251,21 @@ function menu_kraut(callback) {
 		}
     });
 }
+
+function menu_hartl(callback) {
+    var url = 'https://www.mittag.at/r/hartls-kulinarikum';
+
+    request(url, function(error, response, html) {
+		var result = "**Hartl's Kulinarikum**\n\n";
+        if (!error) {
+			var $ = cheerio.load(html);
+			var r = $(`#current-menu > div`).text().replace("<br>", "\n")
+			result += r;
+			callback(result)
+        } else {
+			callback("Could not read todays menu, sorry :(");
+		}
+    });
+}
+
+
