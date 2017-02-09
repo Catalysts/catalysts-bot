@@ -77,7 +77,6 @@ intents.matches(kraut.intent, [
     }
 ]);
 
-
 intents.matches(/.*all.*/i, [
     function(session) {
         eisernehand.menu(result => session.send(result));
