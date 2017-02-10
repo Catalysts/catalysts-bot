@@ -13,6 +13,7 @@ var rk = require('./menus/rk.js');
 var gkk = require('./menus/gkk.js');
 var eisernehand = require('./menus/eisernehand.js');
 var lackinger = require('./menus/lackinger.js');
+var wegschaider = require('./menus/wegschaider.js');
 
 //=========================================================
 // Bot Setup
@@ -77,6 +78,12 @@ intents.matches(kraut.intent, [
     }
 ]);
 
+intents.matches(wegschaider.intent, [
+    function(session) {
+        wegschaider.menu(result => session.send(result));
+    }
+]);
+
 intents.matches(/.*all.*/i, [
     function(session) {
         eisernehand.menu(result => session.send(result));
@@ -85,6 +92,7 @@ intents.matches(/.*all.*/i, [
         lackinger.menu(result => session.send(result));
         kraut.menu(result => session.send(result));
         hartl.menu(result => session.send(result));
+        wegschaider.menu(result => session.send(result));
     }
 ]);
 
