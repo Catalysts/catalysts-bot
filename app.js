@@ -1,19 +1,7 @@
 var restify = require('restify');
 var builder = require('botbuilder');
-var cheerio = require('cheerio');
-var request = require('request');
-
-//=========================================================
-// Menus
-//=========================================================
-
-var hartl = require('./menus/hartl.js');
-var kraut = require('./menus/krauterspiele.js');
-var rk = require('./menus/rk.js');
-var gkk = require('./menus/gkk.js');
-var eisernehand = require('./menus/eisernehand.js');
-var lackinger = require('./menus/lackinger.js');
-var wegschaider = require('./menus/wegschaider.js');
+var fs = require('fs');
+var path = require('path');
 
 //=========================================================
 // Bot Setup
@@ -37,62 +25,50 @@ server.post('/api/messages', connector.listen());
 var intents = new builder.IntentDialog();
 
 //=========================================================
+// load menus
+//=========================================================
+
+//dynamically load all menu modules in ./menus
+
+var requireDir = function(dir) {
+    var aret = Array();
+    fs.readdirSync(dir).forEach(function(library) {
+        var isLibrary = library.split(".").length > 0 && library.split(".")[1] === 'js',
+            libName = library.split(".")[0].toLowerCase();
+        if (isLibrary) {
+            var p = path.join(__dirname, dir);
+            aret[libName] = require(path.join(p, library));
+        }
+    });
+    return aret;
+}
+
+var menus = requireDir("menus");
+
+//=========================================================
 // Bots Dialogs
 //=========================================================
 
 bot.dialog('/', intents);
 
-intents.matches(rk.intent, [
-    function(session) {
-        menu.rk(result => session.send(result));
-    }
-]);
+//create intents for alle menu modules
 
-intents.matches(gkk.intent, [
-    function(session) {
-        gkk.menu(result => session.send(result));
-    }
-]);
+var createIntent = function(m) {
+    intents.matches(m.intent, [
+        session => m.menu(result => session.send(result))
+    ]);
+}
 
-intents.matches(eisernehand.intent, [
-    function(session) {
-        menu_eisernehand(result => session.send(result));
-    }
-]);
-
-intents.matches(lackinger.intent, [
-    function(session) {
-        lackinger.menu(result => session.send(result));
-    }
-]);
-
-intents.matches(hartl.intent, [
-    function(session) {
-        hartl.menu(result => session.send(result));
-    }
-]);
-
-intents.matches(kraut.intent, [
-    function(session) {
-        kraut.menu(result => session.send(result));
-    }
-]);
-
-intents.matches(wegschaider.intent, [
-    function(session) {
-        wegschaider.menu(result => session.send(result));
-    }
-]);
+for (var menu in menus) {
+    createIntent(menus[menu]);
+}
 
 intents.matches(/.*all.*/i, [
     function(session) {
-        eisernehand.menu(result => session.send(result));
-        gkk.menu(result => session.send(result));
-        rk.menu(result => session.send(result));
-        lackinger.menu(result => session.send(result));
-        kraut.menu(result => session.send(result));
-        hartl.menu(result => session.send(result));
-        wegschaider.menu(result => session.send(result));
+        //send answer for each menu
+        for (var menu in menus) {
+            menus[menu].menu(result => session.send(result));
+        }
     }
 ]);
 
