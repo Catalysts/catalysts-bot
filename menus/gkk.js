@@ -9,7 +9,7 @@ module.exports = {
         var url = 'http://www.caseli.at/content/download/1363/6617/file/Speiseplan_O%C3%96_GKK_Hauptstelle.pdf'
 
         var day = new Date().getDay();
-        var result = "";
+        var result = "**GKK**\n\n";
 
         if (day < 1 || day > 5) {
             result += "No menu today."
@@ -55,9 +55,8 @@ module.exports = {
             var index = day * 2;
 
             var menu = results[index].trim().replace(/Classic (I+)/g, "\n\nClassic $1\n\n").replace(/^, /g, "").replace("%2C", "");
-
-            //console.log(menu);
-            callback("**GKK**\n\n" + menu);
+            result += menu;
+            callback(menu);
         });
 
         var pdfPipe = request(url).pipe(pdfParser);
