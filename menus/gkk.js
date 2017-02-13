@@ -56,7 +56,7 @@ module.exports = {
 
             var menu = results[index].trim().replace(/Classic (I+)/g, "\n\nClassic $1\n\n").replace(/^, /g, "").replace("%2C", "");
             result += menu;
-            callback(menu);
+            callback(result);
         });
 
         var pdfPipe = request(url).pipe(pdfParser);
