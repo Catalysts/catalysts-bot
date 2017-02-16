@@ -41,7 +41,7 @@ function newHartl(callback) {
 
         var results = text.split(/(MONTAG|DIENSTAG|MITTWOCH|DONNERSTAG|FREITAG|ALLE ZUTATEN)/)
 
-        console.log(results);
+        //console.log(results);
 
         var index = day * 2;
 
