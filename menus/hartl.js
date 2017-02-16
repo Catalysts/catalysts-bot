@@ -25,7 +25,7 @@ function newHartl(callback) {
         return;
     }
 
-    console.log(url);
+    //console.log(url);
 
     var pdfParser = new PDFParser();
 
