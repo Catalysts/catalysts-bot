@@ -31,7 +31,7 @@ var intents = new builder.IntentDialog();
 //dynamically load all menu modules in ./menus
 
 var requireDir = function(dir) {
-    var aret = Array();
+    var aret = new Array();
     fs.readdirSync(dir).forEach(function(library) {
         var isLibrary = library.split(".").length > 0 && library.split(".")[1] === 'js',
             libName = library.split(".")[0].toLowerCase();
@@ -55,7 +55,7 @@ bot.dialog('/', intents);
 
 var createIntent = function(m) {
     intents.matches(m.intent, [
-        session => m.menu(result => session.send(result))
+        (session) => m.menu((result) => session.send(result))
     ]);
 }
 
@@ -75,11 +75,11 @@ intents.matches(/.*all.*/i, [
 intents.onDefault([
     function(session, args, next) {
 
-    	var commands = "";
-    	for (var menu in menus) {
-    		commands += `**${menu}**\n`
-    	}
+        var commands = "";
+        for (var menu in menus) {
+            commands += `**${menu}**\n`
+        }
 
-        session.send(`Hey, I'm a pretty dumb bot (angel). So far I only understand: ${commands}.\n\nTeach me more here: https://github.com/fchtngr/catalysts-lunch-bot`);
+        session.send(`Hey, I'm a pretty dumb bot (angel). So far I only understand: all ${commands}.\n\nTeach me more here: https://github.com/fchtngr/catalysts-lunch-bot`);
     }
 ]);
