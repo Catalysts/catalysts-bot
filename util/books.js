@@ -12,7 +12,7 @@ module.exports = {
         var reviewurl = 'https://www.goodreads.com/review/show/'
         console.log(url + isbn);
         request(url + isbn, function(error, response, html) {
-            var errorCallback = () => callback("Nope it looks like we dont have that book.");
+            var errorCallback = () => callback(`Nope it looks like we dont have that book (${isbn}).`);
             if (error) {
                 errorCallback();
                 return;
