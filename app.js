@@ -2,6 +2,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var fs = require('fs');
 var path = require('path');
+var books = require('./util/books.js')
 
 //=========================================================
 // Bot Setup
@@ -68,6 +69,18 @@ intents.matches(/.*all.*/i, [
         //send answer for each menu
         for (var menu in menus) {
             menus[menu].menu(result => session.send(result));
+        }
+    }
+]);
+
+intents.matches(books.intent, [
+    function(session, args, next) {
+        var isbn = session.message.text.match(/[0-9]+/g)
+
+        if (isbn.length > 0) { 
+            books.query(result => session.send(result), isbn[0])
+        } else {
+            session.send("Sorry couldnt find anything. Did you forget the isbn number?");
         }
     }
 ]);
