@@ -77,7 +77,7 @@ intents.matches(books.intent, [
     function(session, args, next) {
         session.send("Give me a second to look it up.");
         var isbn = session.message.text.match(/[0-9]+/g)
-
+        session.send(isbn.toString());
         if (isbn.length > 0 || !isbn[0].trim()) { 
             books.query(result => session.send(result), isbn[0])
         } else {
