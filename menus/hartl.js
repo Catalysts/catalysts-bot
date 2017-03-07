@@ -50,7 +50,6 @@ function newHartl(callback) {
                 //console.log(results);
 
                 var index = day * 2;
-
                 var menu = results[index].trim().replace("%2C", ",").replace("%3A", "");
                 result += menu;
                 callback(result);
@@ -59,8 +58,8 @@ function newHartl(callback) {
             var pdfPipe = request(base_url + menuFile).pipe(pdfParser);
         } else {
             result += "Couldn't read todays menu, sorry!";
+            callback(result);
         }
-        callback(result);
     });
 
 }
