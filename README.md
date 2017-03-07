@@ -51,3 +51,7 @@ then, use the [Microsoft Bot Framework Emulator](https://docs.botframework.com/e
 - Added locations (linz, vienna, cluj)
 - Fixed hartl (pdf file name changes from week to week, now parsing it from their website)
 - Remove kräuterspiele (closed)
+
+**27.02.2017**
+
+- Add a book command (matches "book <isbn>"). Tells you whether we have a book in our library.
