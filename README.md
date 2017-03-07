@@ -46,6 +46,7 @@ then, use the [Microsoft Bot Framework Emulator](https://docs.botframework.com/e
 
 ## Changelog
 
-**08.03.2017**	Added locations (linz, vienna, cluj)
-				Fixed hartl (pdf file name changes from week to week, now parsing it from their website)
-				Remove kräuterspiele (closed)
+**08.03.2017**	
+-Added locations (linz, vienna, cluj)
+-Fixed hartl (pdf file name changes from week to week, now parsing it from their website)
+-Remove kräuterspiele (closed)
