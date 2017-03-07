@@ -34,7 +34,7 @@ var intents = new builder.IntentDialog();
 var requireDir = function(dir) {
     var aret = new Array();
     fs.readdirSync(dir).forEach(function(library) {
-        var isLibrary = library.split(".").length > 0 && library.split(".")[1] === 'js',
+        var isLibrary = library.split(".").length > 0 && library.split(".")[1] === 'js' && !library.startsWith("_"),
             libName = library.split(".")[0].toLowerCase();
         if (isLibrary) {
             var p = path.join(__dirname, dir);
