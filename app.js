@@ -95,6 +95,18 @@ intents.matches(/.*vienna.*/i, [
     }
 ]);
 
+intents.matches(/.*cluj.*/i, [
+    function(session) {
+        //send answer for each menu
+        for (var menu in menus) {
+            if (menus[menu].location === "cluj") {
+                menus[menu].menu(result => session.send(result));
+            }
+        }
+    }
+]);
+
+
 intents.matches(books.intent, [
     function(session, args, next) {
         session.send("Give me a second to look it up.");
