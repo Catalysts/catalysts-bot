@@ -4,6 +4,7 @@ var cheerio = require('cheerio');
 module.exports = {
 
     intent: /.*eiserne|eiserne hand.*/i,
+    location: "linz",
     menu: function(callback) {
         var url = 'https://manager.yamigoo.com/public/weekly-menu/html/25';
 

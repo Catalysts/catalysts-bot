@@ -5,6 +5,7 @@ var PDFParser = require('pdf2json');
 module.exports = {
 
     intent: /.*gkk.*/i,
+    location: "linz",
     menu: function(callback) {
         var url = 'http://www.caseli.at/content/download/1363/6617/file/Speiseplan_O%C3%96_GKK_Hauptstelle.pdf'
 

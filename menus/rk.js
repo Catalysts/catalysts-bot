@@ -4,6 +4,7 @@ var cheerio = require('cheerio');
 module.exports = {
 
     intent: /.*rk.*/i,
+    location: "linz",
     menu: function(callback) {
         var url = 'http://www.mandis-kantine.at/men1908-23082013';
 

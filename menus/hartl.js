@@ -7,11 +7,12 @@ var mittag = require('../util/mittagat.js')
 
 module.exports = {
     intent: /.*hartl.*/i,
+    location: "linz",
     //menu: (callback) => mittag.menu(callback, "hartls-kulinarikum")
-    menu: newHartl
+    menu: menuHartl
 }
 
-function newHartl(callback) {
+function menuHartl(callback) {
     var menu_url = `http://www.hartls-kulinarikum.at/startseite/mittag.html`;
     var base_url = `http://www.hartls-kulinarikum.at/`;
 
