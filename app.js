@@ -116,6 +116,6 @@ intents.onDefault([
             commands += `**${menu}**\n`
         }
 
-        session.send(`Hey, I'm a pretty dumb bot (angel). So far I only understand: all ${commands}.\n\nTeach me more here: https://github.com/fchtngr/catalysts-lunch-bot`);
+        session.send(`Hey, I'm a pretty dumb bot (angel). So far I only understand:\n**all**\n**linz**\n**vienna**\n${commands}.\n\nTeach me more here: https://github.com/fchtngr/catalysts-lunch-bot`);
     }
 ]);
