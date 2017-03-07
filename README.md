@@ -26,11 +26,13 @@ Add a file xyz.js to 'menus'. Use this template:
 
 ```
 module.exports = {
-	intent: "your intent",							//the intent to match
+	intent: "your intent",				//the intent to match
 	location: "your location",			//the location: "linz", "vienna" or "cluj"
 	menu: function(callback) {...}		//a function that parses the menu from somewhere
 }
 ```
+
+All js files in 'menus' will be loaded automatically (except if the file starts with an underscore '_').
 
 ## Testing
 
