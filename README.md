@@ -20,6 +20,18 @@ For getting started, try
 
 Feel free to submit pull requests with more lunch commands! 
 
+### Add a new menu
+
+Add a file xyz.js to 'menus'. Use this template:
+
+```
+module.exports = {
+	intent: "your intent",							//the intent to match
+	location: "your location",			//the location: "linz", "vienna" or "cluj"
+	menu: function(callback) {...}		//a function that parses the menu from somewhere
+}
+```
+
 ## Testing
 
 First, run the bot 
