@@ -12,43 +12,55 @@ module.exports = {
 }
 
 function newHartl(callback) {
-    var date = new Date();
-    var week = currentWeekNumber();
-    var url = `http://www.hartls-kulinarikum.at/uploads/media/KULI_WM__KW_${week}_${1900 + date.getYear()}.pdf`
+    var menu_url = `http://www.hartls-kulinarikum.at/startseite/mittag.html`;
+    var base_url = `http://www.hartls-kulinarikum.at/`;
 
-    var day = new Date().getDay();
     var result = "**Hartl**\n\n";
+    var day = new Date().getDay();
 
     if (day < 1 || day > 4) {
-        result += "No menu today."
+        result += "No menu today.";
         callback(result);
         return;
     }
 
-    //console.log(url);
+    request(menu_url, function (error, response, html) {
 
-    var pdfParser = new PDFParser();
+        if (!error) {
+            var $ = cheerio.load(html);
+            var re = `"(uploads/media/.*pdf)"`;
+            var matches = $(`#container-middle`).toString().match(re);
 
-    pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError));
+            var menuFile = matches[1];
 
-    pdfParser.on("pdfParser_dataReady", pdfData => {
-        var text = pdfData.formImage.Pages[0].Texts.reduce(function(a, b) {
-            return a + b.R.reduce(function(a, b) {
-                return a + b.T;
-            }, "");
-        }, "");
-        text = decodeURI(text);
+            var pdfParser = new PDFParser();
 
-        var results = text.split(/(MONTAG|DIENSTAG|MITTWOCH|DONNERSTAG|FREITAG|ALLE ZUTATEN)/)
+            pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError));
 
-        //console.log(results);
+            pdfParser.on("pdfParser_dataReady", pdfData => {
+                var text = pdfData.formImage.Pages[0].Texts.reduce(function (a, b) {
+                    return a + b.R.reduce(function (a, b) {
+                        return a + b.T;
+                    }, "");
+                }, "");
+                text = decodeURI(text);
 
-        var index = day * 2;
+                var results = text.split(/(MONTAG|DIENSTAG|MITTWOCH|DONNERSTAG|FREITAG|ALLE ZUTATEN)/)
 
-        var menu = results[index].trim().replace("%2C", ",").replace("%3A", "");
-        result += menu;
+                //console.log(results);
+
+                var index = day * 2;
+
+                var menu = results[index].trim().replace("%2C", ",").replace("%3A", "");
+                result += menu;
+                callback(result);
+            });
+
+            var pdfPipe = request(base_url + menuFile).pipe(pdfParser);
+        } else {
+            result += "Couldn't read todays menu, sorry!";
+        }
         callback(result);
     });
 
-    var pdfPipe = request(url).pipe(pdfParser);
 }
