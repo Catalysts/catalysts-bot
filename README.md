@@ -1,20 +1,28 @@
-# Catalysts Lunch Bot
+# Catalysts Bot
 
 :cow: :sushi: :hamburger: :spaghetti: :stew:
 
-Bringing back the glorious lunchbot!
+Bringing back the glorious lunchbot! And more stuff!
 
 :rice: :green_apple: :beers: :fork_and_knife: :poultry_leg:
+
+## Features
+
+### Lunch
+
+Ask the bot whats for lunch today. It understands locations (linz/vienna/cluj), so you can ask **@cat-lunch-bot linz**. 
+
+### Books
+
+Have you ever found an interesting book and wondered whether we have a copy in our library? The bot can help you answer this question, simply ask:
+```
+@cat-lunch-bot do we have the book 0132350882
+```
+The bot will look into our goodreads shelves and lets you know whether we have it or not.
 
 ## How to
 
 Just add [the bot](https://join.skype.com/bot/1e7994e1-ae54-4ed0-be74-05e16bc835d6) as contact in Skype (it is not published yet, so use the link here). In group chats use @cat-lunch-bot to talk to it.
-
-For getting started, try
-
-```
-@cat-lunch-bot all
-```
 
 ## Contributing
 
