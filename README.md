@@ -14,11 +14,7 @@ Ask the bot whats for lunch today. It understands locations (linz/vienna/cluj), 
 
 ### Books
 
-Have you ever found an interesting book and wondered whether we have a copy in our library? The bot can help you answer this question, simply ask:
-```
-@cat-lunch-bot do we have the book 0132350882
-```
-The bot will look into our goodreads shelves and lets you know whether we have it or not.
+Have you ever found an interesting book and wondered whether we have a copy in our library? The bot can help you answer this question, simply ask **@cat-lunch-bot do we have the book 0132350882**. The bot will look into our goodreads shelves and lets you know whether we have it or not.
 
 ## How to
 
