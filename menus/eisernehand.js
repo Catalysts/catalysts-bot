@@ -23,7 +23,7 @@ module.exports = {
                 result += r;
             }
 
-            callback(result)
-        })
+            callback(result);
+        });
     }
 }

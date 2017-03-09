@@ -1,8 +1,8 @@
 var restify = require('restify');
 var builder = require('botbuilder');
-var fs = require('fs');
 var path = require('path');
-var books = require('./util/books.js')
+var loaddir = require('./util/loaddir.js');
+var books = require('./util/books.js');
 
 //=========================================================
 // Bot Setup
@@ -29,22 +29,7 @@ var intents = new builder.IntentDialog();
 // load menus
 //=========================================================
 
-//dynamically load all menu modules in ./menus
-
-var requireDir = function(dir) {
-    var aret = new Array();
-    fs.readdirSync(dir).forEach(function(library) {
-        var isLibrary = library.split(".").length > 0 && library.split(".")[1] === 'js' && !library.startsWith("_"),
-            libName = library.split(".")[0].toLowerCase();
-        if (isLibrary) {
-            var p = path.join(__dirname, dir);
-            aret[libName] = require(path.join(p, library));
-        }
-    });
-    return aret;
-}
-
-var menus = requireDir("menus");
+var menus = loaddir.requireDir(path.join(__dirname, "menus"));
 
 //=========================================================
 // Bots Dialogs
