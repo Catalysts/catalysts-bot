@@ -45,6 +45,10 @@ node app.js
 then, use the [Microsoft Bot Framework Emulator](https://docs.botframework.com/en-us/tools/bot-framework-emulator/) and connect to it.
 
 ## Changelog
+**09.03.2017**
+
+- Deactivate hartl
+- Unify service and bot into one repo
 
 **08.03.2017**	
 
