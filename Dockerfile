@@ -11,5 +11,5 @@ RUN npm install
 # Bundle app source
 COPY . /usr/src/app
 
-EXPOSE 8080
-CMD [ "node", "lunchservice.js" ]
+EXPOSE 3978 8080 
+CMD [ "node", "app.js" ]
