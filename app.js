@@ -5,13 +5,33 @@ var loaddir = require('./util/loaddir.js');
 var books = require('./util/books.js');
 
 //=========================================================
+// load menus
+//=========================================================
+
+var menus = loaddir.requireDir(path.join(__dirname, "menus"));
+
+//=========================================================
+// Service Setup
+//=========================================================
+
+var serviceServer = restify.createServer();
+serviceServer.listen(8080, function () {
+    console.log('%s listening to %s', serviceServer.name, serviceServer.url);
+});
+
+serviceServer.get('/menu/:name', function (req, res, next) {
+    var name = req.params['name'];
+    menus[name].menu((result) => res.send(200, result));
+});
+
+//=========================================================
 // Bot Setup
 //=========================================================
 
 // Setup Restify Server
-var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function() {
-    console.log('%s listening to %s', server.name, server.url);
+var botServer = restify.createServer();
+botServer.listen(process.env.port || process.env.PORT || 3978, function() {
+    console.log('%s listening to %s', botServer.name, botServer.url);
 });
 
 // Create chat bot
@@ -21,15 +41,9 @@ var connector = new builder.ChatConnector({
 });
 
 var bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
+botServer.post('/api/messages', connector.listen());
 
 var intents = new builder.IntentDialog();
-
-//=========================================================
-// load menus
-//=========================================================
-
-var menus = loaddir.requireDir(path.join(__dirname, "menus"));
 
 //=========================================================
 // Bots Dialogs
