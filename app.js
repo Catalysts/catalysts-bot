@@ -4,6 +4,8 @@ var path = require('path');
 var loaddir = require('./util/loaddir.js');
 var books = require('./util/books.js');
 
+console.log(process.env.MICROSOFT_APP_ID);
+
 //=========================================================
 // load menus
 //=========================================================
@@ -33,6 +35,7 @@ var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
+
 
 var bot = new builder.UniversalBot(connector);
 server.post('/bot', connector.listen());
