@@ -66,6 +66,13 @@ intents.matches(/.*all.*/i, [
     }
 ]);
 
+intents.matches(/ping|are you alive?/i, [
+    function(session) {
+        //send answer for each menu
+        session.send("I AM ALIVE!");
+    }
+]);
+
 intents.matches(/.*linz.*/i, [
     function(session) {
         //send answer for each menu
