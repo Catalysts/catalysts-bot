@@ -14,12 +14,12 @@ var menus = loaddir.requireDir(path.join(__dirname, "menus"));
 // Service Setup
 //=========================================================
 
-var serviceServer = restify.createServer();
-serviceServer.listen(8080, function () {
-    console.log('%s listening to %s', serviceServer.name, serviceServer.url);
+var server = restify.createServer();
+server.listen(8080, function () {
+    console.log('%s listening to %s', server.name, server.url);
 });
 
-serviceServer.get('/menu/:name', function (req, res, next) {
+server.get('/menu/:name', function (req, res, next) {
     var name = req.params['name'];
     menus[name].menu((result) => res.send(200, result));
 });
@@ -28,12 +28,6 @@ serviceServer.get('/menu/:name', function (req, res, next) {
 // Bot Setup
 //=========================================================
 
-// Setup Restify Server
-var botServer = restify.createServer();
-botServer.listen(process.env.port || process.env.PORT || 3978, function() {
-    console.log('%s listening to %s', botServer.name, botServer.url);
-});
-
 // Create chat bot
 var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
@@ -41,7 +35,7 @@ var connector = new builder.ChatConnector({
 });
 
 var bot = new builder.UniversalBot(connector);
-botServer.post('/api/messages', connector.listen());
+server.post('/bot', connector.listen());
 
 var intents = new builder.IntentDialog();
 
