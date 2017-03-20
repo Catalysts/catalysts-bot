@@ -8,8 +8,8 @@ var mittag = require('../util/mittagat.js')
 module.exports = {
     intent: /.*hartl.*/i,
     location: "linz",
-    //menu: (callback) => mittag.menu(callback, "hartls-kulinarikum")
-    menu: menuHartl
+    menu: (callback) => mittag.menu(callback, "hartls-kulinarikum")
+    //menu: menuHartl
 }
 
 function menuHartl(callback) {
