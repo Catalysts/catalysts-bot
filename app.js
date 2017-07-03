@@ -21,6 +21,7 @@ server.listen(8080, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
 
+//a rest client for alexa to talk to
 server.get('/menu/:name', function (req, res, next) {
     var name = req.params['name'];
     menus[name].menu((result) => res.send(200, result));
@@ -71,7 +72,11 @@ intents.matches(/.*all.*/i, [
 intents.matches(/ping|are you alive?/i, [
     function(session) {
         //send answer for each menu
-        session.send("I AM ALIVE!");
+        if (Math.random() > 0.5) {
+        	session.send("https://www.youtube.com/watch?v=oQwNN-0AgWc")
+        } else {
+        	session.send("I AM ALIVE!");	
+        }
     }
 ]);
 
