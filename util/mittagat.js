@@ -11,7 +11,7 @@ module.exports = {
             var result = `**${mittagName}**\n\n`;
             if (!error) {
                 var $ = cheerio.load(html);
-                var r = $(`#current-menu > div`).text().replace("<br>", "\n")
+                var r = $(`#current-menu > div.current-menu`).text().replace("<br>", "\n")
                 result += r;
                 callback(result)
             } else {
