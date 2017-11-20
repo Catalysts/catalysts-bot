@@ -53,14 +53,7 @@ var createIntent = function(m) {
     intents.matches(m.intent, [
         (session) => m.menu((result) => {
         		console.log(result);
-        		var reply = {
-                  "attachments": [
-                    {
-                      "contentType": "application/vnd.microsoft.card.adaptive",
-                      "content": result
-                    }]
-                }
-        		session.send(reply);
+        		session.send(result);
     		}
     	)
     ]);
@@ -74,14 +67,7 @@ intents.matches(/.*all.*/i, [
     function(session) {
         for (var menu in menus) {
         	menus[menu].menu(result => {
-        		var reply = {
-                  "attachments": [
-                    {
-                      "contentType": "application/vnd.microsoft.card.adaptive",
-                      "content": result
-                    }]
-                }
-        		session.send(reply);
+        		session.send(result);
 
         	});
         }

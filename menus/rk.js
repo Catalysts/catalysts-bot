@@ -9,7 +9,7 @@ module.exports = {
         var url = 'http://www.mandis-kantine.at/men1908-23082013';
 
         request(url, function(error, response, html) {
-            var result = "";
+            var result = "**RK**\n\n";
             if (!error) {
                 var day = new Date().getDay();
                 var row = day + 4; //thats just how their table is laid out
@@ -24,33 +24,7 @@ module.exports = {
             } else {
                 result += "Couldn't read todays menu, sorry!"
             }
-
-            //TODO move template out of code
-            var json = {
-                    "type": "AdaptiveCard",
-                    "version": "1.0",
-                    "body": [
-                      {
-                        "type": "TextBlock",
-                        "text": "RK",
-                        "size": "large",
-                        "weight": "bolder"
-                      },
-                      {
-                        "type": "TextBlock",
-                        "wrap": "true",
-                        "text": result
-                      }
-                    ],
-                    "actions": [
-                      {
-                        "type": "Action.OpenUrl",
-                        "url": url,
-                        "title": "See source"
-                      }
-                    ]
-                  }
-            callback(json);
-        })
+            callback(result);
+        });
     }
-}
+};
