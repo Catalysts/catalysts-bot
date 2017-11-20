@@ -1,6 +1,7 @@
 var request = require('request');
 var cheerio = require('cheerio');
 var PDFParser = require('pdf2json');
+var builder = require('botbuilder');
 
 module.exports = {
 
@@ -10,7 +11,7 @@ module.exports = {
         var url = 'http://www.caseli.at/content/download/1363/6617/file/Speiseplan_O%C3%96_GKK_Hauptstelle.pdf'
 
         var day = new Date().getDay();
-        var result = "**GKK**\n\n";
+        var result = "";
 
         if (day < 1 || day > 5) {
             result += "No menu today."
@@ -55,9 +56,55 @@ module.exports = {
                  */
             var index = day * 2;
 
-            var menu = results[index].trim().replace(/Classic (I+)/g, "\n\nClassic $1\n\n").replace(/^, /g, "").replace("%2C", "");
+            //console.log(results[index]);
+			//console.log("---------------------------");
+            var menu = results[index].trim();
+            menu = decodeURIComponent(menu);
+            menu = menu.replace(/Classic (I+)/g, "\n\n**Classic $1**\n\n");
+            menu = menu.replace("GUSTO", "\n\n**Gusto**\n\n");
+            menu = menu.replace("Mehlspeise", "\n\n**Mehlspeise**\n\n");
+            menu = menu.replace(/^, /g, "");
+            menu = menu.replace("%2C", "");
+
+            //console.log(menu)
+            //console.log("---------------------------");
+            menu = menu.substring(menu.indexOf("*") + 1);
+            menu = menu.replace(/[0-9]+/g, "\n")
+            //console.log(menu)
+            //console.log("---------------------------");
             result += menu;
-            callback(result);
+
+            //TODO move template out of code
+			var json = {
+			        "type": "AdaptiveCard",
+			        "version": "1.0",
+			        "body": [
+			          {
+			          	"type": "Container",
+			          	"items": [
+			          		{
+					            "type": "TextBlock",
+					            "text": "GKK",
+					            "size": "large",
+					            "weight": "bolder"
+			          		},
+			          		{
+					            "type": "TextBlock",
+					            "wrap": "true",
+					            "text": result
+			          		}
+			          	]
+			          }
+			        ],
+			        "actions": [
+			          {
+			            "type": "Action.OpenUrl",
+			            "url": url,
+			            "title": "See source"
+			          }
+			        ]
+			      }
+            callback(json);
         });
 
         var pdfPipe = request(url).pipe(pdfParser);

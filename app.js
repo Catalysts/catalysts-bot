@@ -49,10 +49,20 @@ var intents = new builder.IntentDialog();
 bot.dialog('/', intents);
 
 //create intents for alle menu modules
-
 var createIntent = function(m) {
     intents.matches(m.intent, [
-        (session) => m.menu((result) => session.send(result))
+        (session) => m.menu((result) => {
+        		console.log(result);
+        		var reply = {
+                  "attachments": [
+                    {
+                      "contentType": "application/vnd.microsoft.card.adaptive",
+                      "content": result
+                    }]
+                }
+        		session.send(reply);
+    		}
+    	)
     ]);
 }
 
@@ -62,11 +72,40 @@ for (var menu in menus) {
 
 intents.matches(/.*all.*/i, [
     function(session) {
-        //send answer for each menu
         for (var menu in menus) {
-            menus[menu].menu(result => session.send(result));
+        	menus[menu].menu(result => {
+        		var reply = {
+                  "attachments": [
+                    {
+                      "contentType": "application/vnd.microsoft.card.adaptive",
+                      "content": result
+                    }]
+                }
+        		session.send(reply);
+
+        	});
         }
     }
+/*
+send carousel card for all menues, carousels don't seem to work with addaptive cards yet
+        var cards = [];
+        let ops = []
+        for (var menu in menus) {
+        	ops.push(new Promise((resolve, reject) => {
+        		menus["gkk"].menu(result => {
+        			cards.push(result);
+        			resolve();
+        	})}));
+        }
+
+        Promise.all(ops).then(() => {
+        	var reply = new builder.Message(session)
+        		.attachments(cards);
+    		session.send(reply);
+        });
+    }
+        
+*/
 ]);
 
 intents.matches(/ping|are you alive?/i, [
