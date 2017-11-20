@@ -49,13 +49,12 @@ var intents = new builder.IntentDialog();
 bot.dialog('/', intents);
 
 //create intents for alle menu modules
-var createIntent = function(m) {
+var createIntent = function (m) {
     intents.matches(m.intent, [
         (session) => m.menu((result) => {
-        		console.log(result);
-        		session.send(result);
-    		}
-    	)
+            session.send(result);
+        }
+        )
     ]);
 }
 
@@ -64,49 +63,48 @@ for (var menu in menus) {
 }
 
 intents.matches(/.*all.*/i, [
-    function(session) {
+    function (session) {
         for (var menu in menus) {
-        	menus[menu].menu(result => {
-        		session.send(result);
-
-        	});
+            menus[menu].menu(result => {
+                session.send(result);
+            });
         }
     }
-/*
-send carousel card for all menues, carousels don't seem to work with addaptive cards yet
-        var cards = [];
-        let ops = []
-        for (var menu in menus) {
-        	ops.push(new Promise((resolve, reject) => {
-        		menus["gkk"].menu(result => {
-        			cards.push(result);
-        			resolve();
-        	})}));
+    /*
+    send carousel card for all menues, carousels don't seem to work with addaptive cards yet
+            var cards = [];
+            let ops = []
+            for (var menu in menus) {
+                ops.push(new Promise((resolve, reject) => {
+                    menus["gkk"].menu(result => {
+                        cards.push(result);
+                        resolve();
+                })}));
+            }
+    
+            Promise.all(ops).then(() => {
+                var reply = new builder.Message(session)
+                    .attachments(cards);
+                session.send(reply);
+            });
         }
-
-        Promise.all(ops).then(() => {
-        	var reply = new builder.Message(session)
-        		.attachments(cards);
-    		session.send(reply);
-        });
-    }
-        
-*/
+            
+    */
 ]);
 
 intents.matches(/ping|are you alive?/i, [
-    function(session) {
+    function (session) {
         //send answer for each menu
         if (Math.random() > 0.5) {
-        	session.send("https://www.youtube.com/watch?v=oQwNN-0AgWc")
+            session.send("https://www.youtube.com/watch?v=oQwNN-0AgWc")
         } else {
-        	session.send("I AM ALIVE!");	
+            session.send("I AM ALIVE!");
         }
     }
 ]);
 
 intents.matches(/.*linz.*/i, [
-    function(session) {
+    function (session) {
         //send answer for each menu
         for (var menu in menus) {
             if (menus[menu].location === "linz") {
@@ -117,7 +115,7 @@ intents.matches(/.*linz.*/i, [
 ]);
 
 intents.matches(/.*vienna.*/i, [
-    function(session) {
+    function (session) {
         //send answer for each menu
         for (var menu in menus) {
             if (menu.location === "vienna") {
@@ -128,7 +126,7 @@ intents.matches(/.*vienna.*/i, [
 ]);
 
 intents.matches(/.*cluj.*/i, [
-    function(session) {
+    function (session) {
         //send answer for each menu
         for (var menu in menus) {
             if (menus[menu].location === "cluj") {
@@ -140,12 +138,12 @@ intents.matches(/.*cluj.*/i, [
 
 
 intents.matches(books.intent, [
-    function(session, args, next) {
+    function (session, args, next) {
         session.send("Give me a second to look it up.");
         var isbn = session.message.text.match(/[0-9]+/g)
         //console.log(session.message.text);
-        if (isbn.length > 0 || !isbn[isbn.length-1].trim()) { 
-            books.query(result => session.send(result), isbn[isbn.length-1])
+        if (isbn.length > 0 || !isbn[isbn.length - 1].trim()) {
+            books.query(result => session.send(result), isbn[isbn.length - 1])
         } else {
             session.send("Sorry couldnt find anything. Did you forget the isbn number?");
         }
@@ -153,7 +151,7 @@ intents.matches(books.intent, [
 ]);
 
 intents.onDefault([
-    function(session, args, next) {
+    function (session, args, next) {
 
         var commands = "";
         for (var menu in menus) {

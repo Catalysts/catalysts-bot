@@ -26,9 +26,9 @@ module.exports = {
 
         r = decodeURIComponent(r);
         r = r.replace(/Monday|Tuesday|Wednesday|Thursday|Friday/ig, "");
-        r = r.replace(/starters/ig, "**Starters**\n\n");
+        r = r.replace(/starters/ig, "*Starters*\n\n");
         r = r.replace(/main courses/ig, "");
-        r = r.replace(/[0-9]+\) /g, "\n\n**Main Course**\n\n");
+        r = r.replace(/[0-9]+\) /g, "\n\n*Main Course*\n\n");
         r = r.replace(/EUR [0-9]+\.[0-9]+\n/g, " ");
 
         result += r;

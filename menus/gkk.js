@@ -56,22 +56,16 @@ module.exports = {
                  */
             var index = day * 2;
 
-            //console.log(results[index]);
-			//console.log("---------------------------");
             var menu = results[index].trim();
             menu = decodeURIComponent(menu);
-            menu = menu.replace(/Classic (I+)/g, "\n\n**Classic $1**\n\n");
-            menu = menu.replace("GUSTO", "\n\n**Gusto**\n\n");
-            menu = menu.replace("Mehlspeise", "\n\n**Mehlspeise**\n\n");
+            menu = menu.replace(/Classic (I+)/g, "\n\n*Classic $1*\n\n");
+            menu = menu.replace("GUSTO", "\n\n*Gusto*\n\n");
+            menu = menu.replace("Mehlspeise", "\n\n*Mehlspeise*\n\n");
             menu = menu.replace(/^, /g, "");
             menu = menu.replace("%2C", "");
 
-            //console.log(menu)
-            //console.log("---------------------------");
             menu = menu.substring(menu.indexOf("*") + 1);
-            menu = menu.replace(/[0-9]+/g, "\n")
-            //console.log(menu)
-            //console.log("---------------------------");
+            menu = menu.replace(/[0-9]+/g, "\n");
             result += menu;
 
             callback(result);
