@@ -8,19 +8,23 @@ module.exports = {
         var url = 'https://www.mittag.at/r/' + mittagName;
 
         request(url, function(error, response, html) {
-            var result = "**" + mittagName + "**\n\n";
+            var result = {
+                title: mittagName,
+                url: url,
+                menu: "Couldn't find the menu today :("
+            };
+
             if (!error) {
                 var $ = cheerio.load(html);
                 var r = $(`#current-menu > div.current-menu`).text().replace("<br>", "\n");
                 r = r.replace(/€/g, "");
                 r = r.replace(/[0-9]+[\.,][0-9]+/g, "");
                 r.trim();
-                result += r;
 
-                callback(result);
-            } else {
-                callback("Could not read todays menu, sorry :(");
+                result.menu = r;
             }
+
+            callback(result);
         });
     }
 

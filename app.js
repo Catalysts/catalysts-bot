@@ -11,6 +11,13 @@ console.log("microsoft_app_id: " + process.env.MICROSOFT_APP_ID);
 //=========================================================
 
 var menus = loaddir.requireDir(path.join(__dirname, "menus"));
+var menuReplies = [
+    "Roger roger!",
+    "Here's whats on the menu today:",
+    "Here's what I found:",
+    "Hungry yet?",
+    "Looks like meat is back on the menu boys! Or is it? I'm not smart enough to know that... (smirk). Anyways, here's your menu:"];
+var aliveReplies = ["I AM ALIVE!", "https://www.youtube.com/watch?v=oQwNN-0AgWc"];
 
 //=========================================================
 // Service Setup
@@ -24,7 +31,7 @@ server.listen(8080, function () {
 //a rest client for alexa to talk to
 server.get('/menu/:name', function (req, res, next) {
     var name = req.params['name'];
-    menus[name].menu((result) => res.send(200, result));
+    menus[name].getMenu((result) => res.send(200, result.menu));
 });
 
 //=========================================================
@@ -51,91 +58,70 @@ bot.dialog('/', intents);
 //create intents for alle menu modules
 var createIntent = function (m) {
     intents.matches(m.intent, [
-        (session) => m.menu((result) => {
-            session.send(result);
-        }
+        (session) => m.getMenu(
+            (result) => {
+                session.send(result.menu);
+            }
         )
     ]);
-}
+};
 
 for (var menu in menus) {
     createIntent(menus[menu]);
 }
 
-intents.matches(/.*all.*/i, [
+function createCard(session, menu) {
+    var buttons = [
+        builder.CardAction.openUrl(session, menu.url, "See menu")
+    ];
+
+    if (menu.location !== undefined) {
+        buttons.push(
+            builder.CardAction.openUrl(session, menu.location, "Map")
+        );
+    }
+
+    var card = new builder.HeroCard(session)
+        .title(menu.title)
+        .subtitle(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }))
+        .buttons(buttons)
+        .text(menu.menu);
+    console.log(card.buttons);
+
+    return card;
+}
+
+function getRandomElement(array) {
+    return array[Math.floor(Math.random() * array.length)]
+}
+
+intents.matches(/.*menu|lunch.*/i, [
     function (session) {
+        let cards = [], ops = [];
         for (var menu in menus) {
-            menus[menu].menu(result => {
-                session.send(result);
-            });
-        }
+            ops.push(new Promise((resolve, reject) => {
+                menus[menu].getMenu(result => {
+                    cards.push(createCard(session, result));
+                    resolve();
+                })
+            }));
+        }       
+
+        Promise.all(ops).then(() => {
+            var reply = new builder.Message(session)
+                .text(getRandomElement(menuReplies))
+                .attachmentLayout(builder.AttachmentLayout.carousel)
+                .attachments(cards);
+            session.send(reply);
+        });
     }
-    /*
-    send carousel card for all menues, carousels don't seem to work with addaptive cards yet
-            var cards = [];
-            let ops = []
-            for (var menu in menus) {
-                ops.push(new Promise((resolve, reject) => {
-                    menus["gkk"].menu(result => {
-                        cards.push(result);
-                        resolve();
-                })}));
-            }
-    
-            Promise.all(ops).then(() => {
-                var reply = new builder.Message(session)
-                    .attachments(cards);
-                session.send(reply);
-            });
-        }
-            
-    */
 ]);
 
-intents.matches(/ping|are you alive?/i, [
+intents.matches(/ping|are you alive/i, [
     function (session) {
-        //send answer for each menu
-        if (Math.random() > 0.5) {
-            session.send("https://www.youtube.com/watch?v=oQwNN-0AgWc")
-        } else {
-            session.send("I AM ALIVE!");
-        }
+        session.send(getRandomElement(aliveReplies))
     }
 ]);
-
-intents.matches(/.*linz.*/i, [
-    function (session) {
-        //send answer for each menu
-        for (var menu in menus) {
-            if (menus[menu].location === "linz") {
-                menus[menu].menu(result => session.send(result));
-            }
-        }
-    }
-]);
-
-intents.matches(/.*vienna.*/i, [
-    function (session) {
-        //send answer for each menu
-        for (var menu in menus) {
-            if (menu.location === "vienna") {
-                menus[menu].menu(result => session.send(result));
-            }
-        }
-    }
-]);
-
-intents.matches(/.*cluj.*/i, [
-    function (session) {
-        //send answer for each menu
-        for (var menu in menus) {
-            if (menus[menu].location === "cluj") {
-                menus[menu].menu(result => session.send(result));
-            }
-        }
-    }
-]);
-
 
 intents.matches(books.intent, [
     function (session, args, next) {
@@ -158,6 +144,6 @@ intents.onDefault([
             commands += `**${menu}**\n`
         }
 
-        session.send(`Hey, I'm a pretty dumb bot (angel). So far I only understand:\n**all**\n**linz**\n**vienna**\n${commands}.`);
+        session.send(`Hey, I'm a pretty dumb bot (angel). Here are some commands I understand: \n**menu|lunch**\n${commands}.`);
     }
 ]);

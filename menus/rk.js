@@ -5,11 +5,15 @@ module.exports = {
 
     intent: /.*rk.*/i,
     location: "linz",
-    menu: function(callback) {
-        var url = 'http://www.mandis-kantine.at/men1908-23082013';
+    getMenu: function(callback) {
+        var result = {
+            title: "RK - Mandi's Kantine",
+            url: 'http://www.mandis-kantine.at/men1908-23082013',
+            menu: "Couldn't find the menu today :(",
+            location: "https://www.google.de/maps/place/Austrian+Red+Cross,+regional+Upper+Austria"
+        };
 
-        request(url, function(error, response, html) {
-            var result = "**RK**\n\n";
+        request(result.url, function (error, response, html) {
             if (!error) {
                 var day = new Date().getDay();
                 var row = day + 4; //thats just how their table is laid out
@@ -20,9 +24,7 @@ module.exports = {
                 r = r.replace(/\(.*\)/g, "\n\n");
                 r = r.trim();
 
-                result += r;
-            } else {
-                result += "Couldn't read todays menu, sorry!"
+                result.menu = r;
             }
             callback(result);
         });
