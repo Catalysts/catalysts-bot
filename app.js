@@ -110,7 +110,7 @@ intents.matches(/.*menu|lunch.*/i, [
         Promise.all(ops).then(() => {
             var reply = new builder.Message(session)
                 .text(getRandomElement(menuReplies))
-                .attachmentLayout(builder.AttachmentLayout.carousel)
+                .attachmentLayout(builder.AttachmentLayout.list)
                 .attachments(cards);
             session.send(reply);
         });
