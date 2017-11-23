@@ -70,25 +70,10 @@ for (var menu in menus) {
     createIntent(menus[menu]);
 }
 
-function createCard(session, menu) {
-    var buttons = [
-        builder.CardAction.openUrl(session, menu.url, "See menu")
-    ];
-
-    if (menu.location !== undefined) {
-        buttons.push(
-            builder.CardAction.openUrl(session, menu.location, "Map")
-        );
-    }
-
-    var card = new builder.HeroCard(session)
-        .title(menu.title)
-        .subtitle(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }))
-        .buttons(buttons)
-        .text(menu.menu);
-    console.log(card.buttons);
-
-    return card;
+function createReply(menu) {
+    var r = "\n\n**" + menu.title + "**\n\n"
+    r += menu.menu;
+    return r;
 }
 
 function getRandomElement(array) {
@@ -97,22 +82,21 @@ function getRandomElement(array) {
 
 intents.matches(/.*menu|lunch.*/i, [
     function (session) {
-        let cards = [], ops = [];
+        let ops = [], reply = "";
         for (var menu in menus) {
             ops.push(new Promise((resolve, reject) => {
                 menus[menu].getMenu(result => {
-                    cards.push(createCard(session, result));
+                    reply += createReply(result) + "\n";
                     resolve();
                 })
             }));
-        }       
-
+        }
+        //new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
         Promise.all(ops).then(() => {
-            var reply = new builder.Message(session)
-                .text(getRandomElement(menuReplies))
-                .attachmentLayout(builder.AttachmentLayout.list)
-                .attachments(cards);
-            session.send(reply);
+            var message = getRandomElement(menuReplies) + "\n\n"
+            message += "----------------------\n\n";
+            message += reply;
+            session.send(message);
         });
     }
 ]);

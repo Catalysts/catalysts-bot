@@ -57,9 +57,9 @@ module.exports = {
 
             var menu = results[index].trim();
             menu = decodeURIComponent(menu);
-            menu = menu.replace(/Classic (I+)/g, "\n\n**Classic $1**\n\n");
-            menu = menu.replace("GUSTO", "\n\n**Gusto**\n\n");
-            menu = menu.replace("Mehlspeise", "\n\n**Mehlspeise**\n\n");
+            menu = menu.replace(/Classic (I+)/g, "\n\n*Classic $1*\n\n");
+            menu = menu.replace("GUSTO", "\n\n*Gusto*\n\n");
+            menu = menu.replace("Mehlspeise", "\n\n*Mehlspeise*\n\n");
             menu = menu.replace(/^, /g, "");
             menu = menu.replace("%2C", "");
             menu = menu.substring(menu.indexOf("*") + 1);
