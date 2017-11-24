@@ -22,6 +22,7 @@ module.exports = {
                 var r = $(`#pagetext > table > tbody > tr:nth-child(${row})`).text().replace(/\r\n\s*/g, '\n').trim();
                 r = r.substring(r.indexOf(":") + 1);
                 r = r.replace(/\(.*\)/g, "\n\n");
+                r = r.replace(/\**/g, "");
                 r = r.trim();
 
                 result.menu = r;

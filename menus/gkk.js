@@ -65,6 +65,11 @@ module.exports = {
             menu = menu.substring(menu.indexOf("*") + 1);
             menu = menu.replace(/[0-9]+/g, "\n");
 
+            if (menu.indexOf("Caseli") !== -1) {
+                menu = menu.substring(0, menu.indexOf("Caseli") - 1);
+            }
+            menu = menu.replace("SPEISEPLAN OÖ GK", "");
+
             result.menu = menu;
             callback(result);
         });

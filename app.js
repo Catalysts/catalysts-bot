@@ -80,7 +80,7 @@ function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)]
 }
 
-intents.matches(/.*menu|lunch.*/i, [
+intents.matches(/.*all.*/i, [
     function (session) {
         let ops = [], reply = "";
         for (var menu in menus) {
@@ -128,6 +128,6 @@ intents.onDefault([
             commands += `**${menu}**\n`
         }
 
-        session.send(`Hey, I'm a pretty dumb bot (angel). Here are some commands I understand: \n**menu|lunch**\n${commands}.`);
+        session.send(`Hey, I'm a pretty dumb bot (angel). Here are some commands I understand: \n*all**\n${commands}.`);
     }
 ]);
