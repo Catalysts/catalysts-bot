@@ -16,6 +16,7 @@ var menuReplies = [
     "Here's whats on the menu today:",
     "Here's what I found:",
     "Hungry yet?",
+    "(hungrycat)",
     "Looks like meat is back on the menu boys! Or is it? I'm not smart enough to know that... (smirk). Anyways, here's your menu:"];
 var aliveReplies = ["I AM ALIVE!", "https://www.youtube.com/watch?v=oQwNN-0AgWc"];
 
@@ -76,16 +77,23 @@ function createReply(menu) {
     return r;
 }
 
+function hasSchnitzel(menu) {
+    let result = /schnitz(e|er)?l/gi.test(menu);
+    console.log(result);
+    return result;
+}
+
 function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)]
 }
 
 intents.matches(/.*all.*/i, [
     function (session) {
-        let ops = [], reply = "";
+        let ops = [], reply = "", detectedSchnitzelDay = false;
         for (var menu in menus) {
             ops.push(new Promise((resolve, reject) => {
                 menus[menu].getMenu(result => {
+                    detectedSchnitzelDay |= hasSchnitzel(result.menu);
                     reply += createReply(result) + "\n";
                     resolve();
                 })
@@ -96,6 +104,11 @@ intents.matches(/.*all.*/i, [
             var message = getRandomElement(menuReplies) + "\n\n"
             message += "----------------------\n\n";
             message += reply;
+
+            if (detectedSchnitzelDay) {
+                message += "----------------------\n\n";
+                message += "**Attention**: Detected Schnitzel Day! (dance)";
+            }
             session.send(message);
         });
     }
