@@ -62,7 +62,6 @@ function menuHartl(callback) {
 
             var pdfPipe = request(base_url + menuFile).pipe(pdfParser);
         } else {
-            result += "Couldn't read todays menu, sorry!";
             callback(result);
         }
     });
