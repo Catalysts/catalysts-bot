@@ -77,10 +77,16 @@ function createReply(menu) {
     return r;
 }
 
-function hasSchnitzel(menu) {
-    let result = /schnitz(e|er)?l/gi.test(menu);
-    console.log(result);
-    return result;
+function schnitzelDetector(menu) {
+    let schnitzelResult = "";
+    if(/schnitz(e|er)?l/gi.test(menu.menu)) {
+        schnitzelResult =  `\n**Attention**: Detected Schnitzel Day at ${menu.title}! (dance)`;
+
+        if (!(/wiener/gi.test(menu.menu))) {
+            schnitzelResult += " *Be careful, my algorithm has determined that this may be a* **FAKE SCHNITZEL!** (*confidence:high*) (brokenheart)";
+        }
+    }
+    return schnitzelResult;
 }
 
 function getRandomElement(array) {
@@ -89,11 +95,11 @@ function getRandomElement(array) {
 
 intents.matches(/.*all.*/i, [
     function (session) {
-        let ops = [], reply = "", detectedSchnitzelDay = false;
+        let ops = [], reply = "", schnitzels = "";
         for (var menu in menus) {
             ops.push(new Promise((resolve, reject) => {
                 menus[menu].getMenu(result => {
-                    detectedSchnitzelDay |= hasSchnitzel(result.menu);
+                    schnitzels += schnitzelDetector(result);
                     reply += createReply(result) + "\n";
                     resolve();
                 })
@@ -105,9 +111,9 @@ intents.matches(/.*all.*/i, [
             message += "----------------------\n\n";
             message += reply;
 
-            if (detectedSchnitzelDay) {
-                message += "----------------------\n\n";
-                message += "**Attention**: Detected Schnitzel Day! (dance)";
+            if (schnitzels.length > 0) {
+                message += "---------------------\n";
+                message += schnitzels;
             }
             session.send(message);
         });
