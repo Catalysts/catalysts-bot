@@ -1,3 +1,5 @@
+"use strict";
+
 var restify = require('restify');
 var builder = require('botbuilder');
 var path = require('path');
@@ -31,7 +33,7 @@ server.listen(8080, function () {
 
 //a rest client for alexa to talk to
 server.get('/menu/:name', function (req, res, next) {
-    var name = req.params['name'];
+    var name = req.params.name;
     menus[name].getMenu((result) => res.send(200, result.menu));
 });
 
@@ -102,7 +104,7 @@ intents.matches(/.*all.*/i, [
                     schnitzels += schnitzelDetector(result);
                     reply += createReply(result) + "\n";
                     resolve();
-                })
+                });
             }));
         }
         //new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })

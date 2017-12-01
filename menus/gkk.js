@@ -1,3 +1,5 @@
+"use strict";
+
 var request = require('request');
 var cheerio = require('cheerio');
 var PDFParser = require('pdf2json');
@@ -6,7 +8,7 @@ module.exports = {
 
     intent: /.*gkk.*/i,
     location: "linz",
-    getMenu: function(callback) {
+    getMenu: function (callback) {
         var result = {
             title: "GKK",
             url: 'http://www.caseli.at/content/download/1363/6617/file/Speiseplan_O%C3%96_GKK_Hauptstelle.pdf',
@@ -26,8 +28,8 @@ module.exports = {
             //console.log(JSON.stringify(pdfData));
             //console.log(pdfData.formImage.Pages[0].Texts);
 
-            var text = pdfData.formImage.Pages[0].Texts.reduce(function(a, b) {
-                return a + b.R.reduce(function(a, b) {
+            var text = pdfData.formImage.Pages[0].Texts.reduce(function (a, b) {
+                return a + b.R.reduce(function (a, b) {
                     return a + b.T;
                 }, "");
             }, "");
@@ -76,4 +78,4 @@ module.exports = {
 
         var pdfPipe = request(result.url).pipe(pdfParser);
     }
-}
+};

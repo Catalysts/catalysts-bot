@@ -1,3 +1,5 @@
+"use strict";
+
 var request = require('request');
 var cheerio = require('cheerio');
 
@@ -5,7 +7,7 @@ module.exports = {
     intent: /.*lackinger.*/i,
     location: "linz",
     getMenu: menuLackinger
-}
+};
 
 function menuLackinger(callback) {
     var result = {

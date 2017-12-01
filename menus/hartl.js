@@ -1,3 +1,5 @@
+"use strict";
+
 var request = require('request');
 var cheerio = require('cheerio');
 var currentWeekNumber = require('current-week-number');
@@ -8,7 +10,7 @@ module.exports = {
     intent: /.*hartl.*/i,
     location: "linz",
     getMenu: (callback) => menuHartl(callback)
-}
+};
 
 function menuHartl(callback) {
     var menu_url = `http://www.hartls-kulinarikum.at/startseite/mittag.html`;

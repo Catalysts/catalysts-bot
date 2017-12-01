@@ -1,3 +1,5 @@
+"use strict";
+
 var request = require('request');
 var cheerio = require('cheerio');
 var currentWeekNumber = require('current-week-number');
@@ -8,4 +10,4 @@ module.exports = {
     intent: /.*kowalski.*/i,
     location: "linz",
     getMenu: (callback) => mittag.menu(callback, "kowalski")
-}
+};
