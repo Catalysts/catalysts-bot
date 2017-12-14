@@ -10,7 +10,7 @@ module.exports = {
     getMenu: function(callback) {
         var result = {
             title: "RK - Mandi's Kantine",
-            url: 'http://www.mandis-kantine.at/men1908-23082013',
+            url: 'http://mandis-kantine.stadtausstellung.at/men1908-23082013',
             menu: "Couldn't find the menu today :(",
             location: "https://www.google.de/maps/place/Austrian+Red+Cross,+regional+Upper+Austria"
         };
