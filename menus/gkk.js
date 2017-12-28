@@ -59,7 +59,8 @@ module.exports = {
 
             var menu = results[index];
             if (!menu) {
-               return result;
+                callback(result);
+                return;
             }
             menu = menu.trim();
             menu = decodeURIComponent(menu);
