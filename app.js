@@ -80,12 +80,15 @@ function createReply(menu) {
 }
 
 function schnitzelDetector(menu) {
+    var schnitzeldetected = /schnitz(e|er)?l/gi.test(menu.menu);
+    schnitzeldetected &= !(/semme(r)?l/gi.test(menu.menu));
+
     let schnitzelResult = "";
-    if(/schnitz(e|er)?l/gi.test(menu.menu)) {
+    if(schnitzeldetected) {
         schnitzelResult =  `\n**Attention**: Detected Schnitzel Day at ${menu.title}! (dance)`;
 
         if (!(/wiener/gi.test(menu.menu))) {
-            schnitzelResult += " *Be careful, my algorithm has determined that this may be a* **FAKE SCHNITZEL!** (*confidence:high*) (brokenheart)";
+            schnitzelResult += " *Be careful, my algorithm has determined that this may be a* **FAKE SCHNITZEL!** (brokenheart)";
         }
     }
     return schnitzelResult;
