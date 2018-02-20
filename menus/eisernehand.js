@@ -9,7 +9,7 @@ module.exports = {
     getMenu: function (callback) {
         var result = {
             title: "Eiserne Hand",
-            url: 'https://manager.yamigoo.com/public/weekly-menu/html/25',
+            url: 'http://gasthaus-eisernehand.at/',
             menu: "Couldn't find the menu today :(",
             location: "https://www.google.de/maps/place/Gasthaus+\"Zur+Eisernen+Hand\""
         };
@@ -21,21 +21,20 @@ module.exports = {
                 callback(result);
                 return;
             }
-
             if (!error) {
                 var $ = cheerio.load(html);
-                var r = $(`#content > div.row > div > div.weeklymenu > div:nth-child(${day})`).text().replace(/\n\s*/g, '\n').trim();
+                var r = $(`#av_section_2 > div > div > div > div `).text().replace(/\n\s*/g, '\n').trim().split(/Montag|Dienstag|Mittwoch|Donnerstag|Freitag/);
+                r = r[day]
+                
                 //console.log(typeof(r));
                 //console.log(r);
                 //console.log("-------------------------");
 
-                r = decodeURIComponent(r);
-                r = r.replace(/Monday|Tuesday|Wednesday|Thursday|Friday/ig, "");
-                r = r.replace(/starters/ig, "*Starters*\n\n");
-                r = r.replace(/main courses/ig, "");
-                r = r.replace(/[0-9]+\) /g, "\n\n*Main Course*\n\n");
-                r = r.replace(/EUR [0-9]+\.[0-9]+\n/g, " ");
+                r = r.replace(/[0-9]+\,[0-9]+\n/g, " ");
+                r = r.split("\n")
 
+                r = ["\n\n*Starters*\n\n" + r[1] + "\n\n*Main Course*\n\n" + r[2] + "\n\n*Main Course*\n\n" + r[3]]
+                
                 result.menu = r;
             }
             callback(result);
