@@ -5,6 +5,7 @@ var builder = require('botbuilder');
 var path = require('path');
 var loaddir = require('./util/loaddir.js');
 var books = require('./util/books.js');
+var isitdown = require('./util/isitdown.js');
 
 console.log("microsoft_app_id: " + process.env.MICROSOFT_APP_ID);
 
@@ -129,6 +130,14 @@ intents.matches(/ping|are you alive/i, [
     function (session) {
         session.send(getRandomElement(aliveReplies))
     }
+]);
+
+intents.matches(/is .* down\?*/i, [
+	function(session, args) {
+		var url = /is (.*) down\?*/gi.exec(session.message.text)[1];
+		//console.log(url);
+		session.send(isitdown.isitdown(result => session.send(result), url)); 
+	}
 ]);
 
 intents.matches(books.intent, [
