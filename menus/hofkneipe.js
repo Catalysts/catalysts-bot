@@ -33,15 +33,21 @@ module.exports = {
                     suppe=true;
                 }
                 
-                r = r.split(".")[2]
-                r = r.split(/Menü|Dessert/)
-                
-                if (suppe){
-                    r = ["\n\n*Starters*\n\n" + r[0].split(":")[1] + "\n\n*Main Course*\n\n" + r[1].split(":")[1] + "\n\n*Main Course*\n\n" + r[2].split(":")[1].split("Preis")[0] + "\n\n"]
-                }else{
-                    r = ["\n\n*Main Course*\n\n" + r[1].split(":")[1] + "\n\n*Main Course*\n\n" + r[2].split(":")[1] + "\n\n*Desert*\n\n" + r[3].split(":")[1].split("Preis")[0] + "\n\n"]
+                try{
+                    r = r.split(".")[2]
+                    r = r.split(/Menü|Dessert/)
+                    
+                    
+                    if (suppe){
+                        r = ["\n\n*Starters*\n\n" + r[0].split(":")[1] + "\n\n*Main Course*\n\n" + r[1].split(":")[1] + "\n\n*Main Course*\n\n" + r[2].split(":")[1].split("Preis")[0] + "\n\n"]
+                    }else{
+                        r = ["\n\n*Main Course*\n\n" + r[1].split(":")[1] + "\n\n*Main Course*\n\n" + r[2].split(":")[1] + "\n\n*Desert*\n\n" + r[3].split(":")[1].split("Preis")[0] + "\n\n"]
+                    }
+                    result.menu = r;
                 }
-                result.menu = r;
+                catch(err){
+                    result.menu = "Couldn't parse the menu correctly :("
+                }
             }
             callback(result);
         });
