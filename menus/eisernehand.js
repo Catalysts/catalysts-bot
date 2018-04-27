@@ -29,13 +29,17 @@ module.exports = {
                 //console.log(typeof(r));
                 //console.log(r);
                 //console.log("-------------------------");
-
+                try{
                 r = r.replace(/[0-9]+\,[0-9]+\n/g, " ");
                 r = r.split("\n")
 
                 r = ["\n\n*Starters*\n\n" + r[1] + "\n\n*Main Course*\n\n" + r[2] + "\n\n*Main Course*\n\n" + r[3]]
                 
                 result.menu = r;
+                }
+                catch(err){
+                    result.menu = "The friday bug :("
+                }
             }
             callback(result);
         });
