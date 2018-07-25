@@ -10,7 +10,7 @@ module.exports = {
     getMenu: function (callback) {
         var result = {
             title: "Rauchkuchl",
-            url: 'https://www.charmanterelefant.at',
+            url: 'https://www.mittag.at/r/rauchkuchl',
             menu: "Couldn't find the menu today :(",
             location: "https://www.google.at/maps/place/Charmanter+Elefant"
         };
