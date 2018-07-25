@@ -4,7 +4,8 @@
   "description": "Bringing back the glorious lunch bot!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive \"util/*.spec.js\"",
+    "run": "node app.js"
   },
   "author": "Thomas Feichtinger",
   "license": "MIT",
@@ -16,5 +17,10 @@
     "pdf2json": "^1.1.7",
     "request": "^2.75.0",
     "restify": "^4.1.1"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "chai": "^4.1.2",
+    "sinon": "^6.1.4"
   }
 }
