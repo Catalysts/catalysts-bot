@@ -6,6 +6,7 @@ var path = require('path');
 var loaddir = require('./util/loaddir.js');
 var books = require('./util/books.js');
 var isitdown = require('./util/isitdown.js');
+var allmenus = require('./util/allmenus.js');
 
 console.log("microsoft_app_id: " + process.env.MICROSOFT_APP_ID);
 
@@ -14,13 +15,6 @@ console.log("microsoft_app_id: " + process.env.MICROSOFT_APP_ID);
 //=========================================================
 
 var menus = loaddir.requireDir(path.join(__dirname, "menus"));
-var menuReplies = [
-    "Roger roger!",
-    "Here's whats on the menu today:",
-    "Here's what I found:",
-    "Hungry yet?",
-    "(hungrycat)",
-    "Looks like meat is back on the menu boys! Or is it? I'm not smart enough to know that... (smirk). Anyways, here's your menu:"];
 var aliveReplies = ["I AM ALIVE!", "https://www.youtube.com/watch?v=oQwNN-0AgWc"];
 
 //=========================================================
@@ -74,55 +68,13 @@ for (var menu in menus) {
     createIntent(menus[menu]);
 }
 
-function createReply(menu) {
-    var r = "\n\n**" + menu.title + "**\n\n"
-    r += menu.menu;
-    return r;
-}
-
-function schnitzelDetector(menu) {
-    var schnitzeldetected = /schnitz(e|er)?l/gi.test(menu.menu);
-    schnitzeldetected &= !(/semme(r)?l/gi.test(menu.menu));
-
-    let schnitzelResult = "";
-    if(schnitzeldetected) {
-        schnitzelResult =  `\n**Attention**: Detected Schnitzel Day at ${menu.title}! (dance)`;
-
-        if (!(/wiener/gi.test(menu.menu))) {
-            schnitzelResult += " *Be careful, my algorithm has determined that this may be a* **FAKE SCHNITZEL!** (brokenheart)";
-        }
-    }
-    return schnitzelResult;
-}
-
 function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)]
 }
 
 intents.matches(/.*all.*/i, [
     function (session) {
-        let ops = [], reply = "", schnitzels = "";
-        for (var menu in menus) {
-            ops.push(new Promise((resolve, reject) => {
-                menus[menu].getMenu(result => {
-                    schnitzels += schnitzelDetector(result);
-                    reply += createReply(result) + "\n";
-                    resolve();
-                });
-            }));
-        }
-        //new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-        Promise.all(ops).then(() => {
-            var message = getRandomElement(menuReplies) + "\n\n"
-            message += "----------------------\n\n";
-            message += reply;
-
-            if (schnitzels.length > 0) {
-                message += "---------------------\n";
-                message += schnitzels;
-            }
-            session.send(message);
-        });
+        allmenus.sendAllMenus(session, menus);
     }
 ]);
 

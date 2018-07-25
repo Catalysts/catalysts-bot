@@ -43,7 +43,13 @@ All js files in 'menus' will be loaded automatically (except if the file starts 
 First, run the bot 
 
 ```
-node app.js
+npm run-script run
 ```
 
 then, use the [Microsoft Bot Framework Emulator](https://docs.botframework.com/en-us/tools/bot-framework-emulator/) and connect to it.
+
+### Unit Tests
+
+```
+npm test
+```
