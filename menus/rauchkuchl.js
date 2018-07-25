@@ -19,11 +19,10 @@ module.exports = {
         console.log("-----------------")
         var year = today.getFullYear()
         var month = today.getMonth() + 1
-        Date.prototype.getWeek = function() {
-            var onejan = new Date(this.getFullYear(),0,1);
-            return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+        Date.prototype.getWeek = function () {
+            var onejan = new Date(this.getFullYear(), 0, 1);
+            return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
         }
-
 
 
         var day = new Date().getDay();
@@ -31,8 +30,8 @@ module.exports = {
         var day_of_week = today.getDate();
 
         //check if the week started in the previous month -> url has to be adjusted
-        if (day > day_of_week){
-            month = ("0" + (month-1)).slice(-2);
+        if (day > day_of_week) {
+            month = ("0" + (month - 1)).slice(-2);
         }
 
         // result.url = "https://www.charmanterelefant.at/wp-content/uploads/" + year + "/" + month + "/Wochenmen%C3%BC_Elefant_" + week + "_A3.pdf"
@@ -59,18 +58,13 @@ module.exports = {
                 //console.log(typeof(r));
                 //console.log(r);
                 //console.log("-------------------------");
-                try{
-                    // r = r.replace("(vegan)", "(vegan... 🤢)");
-                    // r = r.replace("2", "\n\n2");
-                    // r = r.split("\n")
-                    //
-                    // r = ["\n\n*Starters*\n\n" + r[1] + "\n\n*Main Course*\n\n" + r[2] + "\n\n*Main Course*\n\n" + r[3]]
+                // r = r.replace("(vegan)", "(vegan... 🤢)");
+                // r = r.replace("2", "\n\n2");
+                // r = r.split("\n")
+                //
+                // r = ["\n\n*Starters*\n\n" + r[1] + "\n\n*Main Course*\n\n" + r[2] + "\n\n*Main Course*\n\n" + r[3]]
 
-                    result.menu = r;
-                }
-                catch(err){
-                    // result.menu = "The friday bug :("
-                }
+                result.menu = r;
                 // console.log(response)
             }
             callback(result);
