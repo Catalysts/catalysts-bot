@@ -23,8 +23,11 @@ module.exports = {
             }
             if (!error) {
                 var $ = cheerio.load(html);
-                var r = $(`#av_section_2 > div > div > div > div `).text().replace(/\n\s*/g, '\n').trim().split(/Montag|Dienstag|Mittwoch|Donnerstag|Freitag/);
-                r = r[day]
+                var r = $(`#av_section_2 > div > div > div > div `).text().replace(/\n\s*/g, '\n').trim().split(/Montag|Dienstag|Mittwoch|Donnerstag/);
+                var friday = $(`#after_section_2 > div > div > div > div `).text().replace(/\n\s*/g, '\n').trim().split(/Freitag/)[1];
+                friday = friday.substr(0,friday.indexOf('Unser'));
+                r.push(friday);
+                r = r[day];
                 
                 //console.log(typeof(r));
                 //console.log(r);
