@@ -14,7 +14,7 @@ function getRandomElement(array) {
 
 
 function createReply(menu) {
-    var r = "\n\n**" + menu.title + "**\n\n"
+    var r = "\n\n**" + menu.title + "**\n"
     r += menu.menu;
     return r;
 }
