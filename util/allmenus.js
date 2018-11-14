@@ -25,7 +25,7 @@ function schnitzelDetector(menu) {
 
     let schnitzelResult = "";
     if(schnitzeldetected) {
-        schnitzelResult =  `\n🚨 Detected Schnitzel Day at **${menu.title}**! (dance)(policecar)`;
+        schnitzelResult =  `\n⚠️ Detected Schnitzel Day at **${menu.title}**! (dance)(policecar)`;
 
         if (!(/wiener/gi.test(menu.menu))) {
             schnitzelResult += " *Be careful, my algorithm has determined that this may be a* **FAKE SCHNITZEL!** (brokenheart)";
