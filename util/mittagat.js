@@ -6,10 +6,10 @@ var cheerio = require('cheerio');
 module.exports = {
 
     intent: "",
-    menu: function(callback, mittagName) {
+    menu: function (callback, mittagName) {
         var url = 'https://www.mittag.at/r/' + mittagName;
 
-        request(url, function(error, response, html) {
+        request(url, function (error, response, html) {
             var result = {
                 title: mittagName,
                 url: url,
@@ -18,7 +18,11 @@ module.exports = {
 
             if (!error) {
                 var $ = cheerio.load(html);
-                var r = $(`#current-menu > div.current-menu`).text().replace("<br>", "\n\n");
+                var menuElement = $(`#current-menu > div.current-menu`);
+                menuElement.find('br').replaceWith('\n');
+                var r = menuElement.text();
+                console.log(r);
+                r = r.replace("Preis:", "");
                 r = r.replace(/€/g, "");
                 r = r.replace(/[0-9]+[\.,][0-9]+/g, "");
                 r.trim();
