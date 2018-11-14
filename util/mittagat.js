@@ -18,7 +18,7 @@ module.exports = {
 
             if (!error) {
                 var $ = cheerio.load(html);
-                var r = $(`#current-menu > div.current-menu`).text().replace("<br>", "\n");
+                var r = $(`#current-menu > div.current-menu`).text().replace("<br>", "\n\n");
                 r = r.replace(/€/g, "");
                 r = r.replace(/[0-9]+[\.,][0-9]+/g, "");
                 r.trim();
