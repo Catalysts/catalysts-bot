@@ -21,11 +21,10 @@ module.exports = {
                 var menuElement = $(`#current-menu > div.current-menu`);
                 menuElement.find('br').replaceWith('\n');
                 var r = menuElement.text();
-                console.log(r);
                 r = r.replace("Preis:", "");
                 r = r.replace(/€/g, "");
                 r = r.replace(/[0-9]+[\.,][0-9]+/g, "");
-                r.trim();
+                r = r.trim();
 
                 result.menu = r;
             }
@@ -33,5 +32,4 @@ module.exports = {
             callback(result);
         });
     }
-
 }
