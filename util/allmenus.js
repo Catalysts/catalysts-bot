@@ -16,6 +16,7 @@ function getRandomElement(array) {
 function createReply(menu) {
     var r = "\n\n🍽️ **" + menu.title.toUpperCase() + "**\n"
     r += menu.menu;
+    r += "\n" + getMemeContent(menu.menu);
     return r;
 }
 
@@ -33,6 +34,14 @@ function schnitzelDetector(menu) {
         schnitzelResult += "\n";
     }
     return schnitzelResult;
+}
+
+function getMemeContent(menu) {
+    var appendMessage = "";
+    if (/reh|hirsch|wild/gi.test(menu) && /ragout/gi.test(menu)) {
+        appendMessage += "(rudolfsurprise) -> https://youtu.be/xP0-WZDAJ3Q?t=69";
+    }
+    return appendMessage;
 }
 
 module.exports = {
