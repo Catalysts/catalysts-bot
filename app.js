@@ -56,11 +56,9 @@ bot.dialog('/', intents);
 //create intents for alle menu modules
 var createIntent = function (m) {
     intents.matches(m.intent, [
-        (session) => m.getMenu(
-            (result) => {
-                session.send(result.menu);
-            }
-        )
+        function (session) {
+            allmenus.sendSingleMenu(session, m);
+        }
     ]);
 };
 

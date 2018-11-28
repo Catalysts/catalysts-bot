@@ -45,6 +45,12 @@ function getMemeContent(menu) {
 }
 
 module.exports = {
+    sendSingleMenu: function(session, menu) {
+        menu.getMenu(result => {
+            var reply = createReply(result) + "\n";
+            session.send(reply);
+        });
+    },
     sendAllMenus: function(session, menus) {
         let ops = [], reply = "", schnitzels = "";
         for (var menu in menus) {
